@@ -35,6 +35,8 @@ jobs:
           cd OriginGSITool
           sudo apt install -y unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename liblzma-dev python3-pip brotli lz4 protobuf-compiler git gawk
           pip3 install backports.lzma protobuf twrpdtgen extract-dtb pycryptodome
+          rm -rf Tools/Firmware_extractor
+          git clone -q https://github.com/erfanoabdi/Firmware_extractor Tools/Firmware_extractor
       - name: Build GSI
         env:
           ROM_TYPE: ${{ github.event.inputs.rom_type }}
@@ -43,8 +45,6 @@ jobs:
         run: |
           cd OriginGSITool
           sudo bash LinkToGSI.sh "$ROM_LINK" "$ROM_TYPE"
-          rm -rf Tools/Firmware_extractor
-          git clone -q https://github.com/erfanoabdi/Firmware_extractor Tools/Firmware_extractor
       - name: Prepare artifacts directory
         run: |
           mkdir -p $GITHUB_WORKSPACE/artifacts
