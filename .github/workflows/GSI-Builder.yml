@@ -43,6 +43,8 @@ jobs:
         run: |
           cd OriginGSITool
           sudo bash LinkToGSI.sh "$ROM_LINK" "$ROM_TYPE"
+          rm -rf Tools/Firmware_extractor
+          git clone -q https://github.com/erfanoabdi/Firmware_extractor Tools/Firmware_extractor
       - name: Prepare artifacts directory
         run: |
           mkdir -p $GITHUB_WORKSPACE/artifacts
