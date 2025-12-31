@@ -41,7 +41,7 @@ jobs:
           ROM_LINK: ${{ github.event.inputs.rom_link }}
           ROM_TYPE_OPTION: ${{ github.event.inputs.rom_type_option }}
         run: |
-          cd FoxetGSI-tool
+          cd OriginGSITool
           if [ "$ROM_TYPE_OPTION" = "AB" ]; then
             sudo bash url2GSI.sh "$ROM_LINK" "$ROM_TYPE" --ab
           else
