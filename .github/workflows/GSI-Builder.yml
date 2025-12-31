@@ -35,8 +35,8 @@ jobs:
           cd OriginGSITool
           sudo apt install -y unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename liblzma-dev python3-pip brotli lz4 protobuf-compiler git gawk
           pip3 install backports.lzma protobuf twrpdtgen extract-dtb pycryptodome
-          rm -rf Tools/Firmware_extractor
-          git clone -q https://github.com/erfanoabdi/Firmware_extractor Tools/Firmware_extractor
+          sudo rm -rf Tools/Firmware_extractor
+          sudo git clone -q https://github.com/erfanoabdi/Firmware_extractor Tools/Firmware_extractor
       - name: Build GSI
         env:
           ROM_TYPE: ${{ github.event.inputs.rom_type }}
@@ -44,7 +44,8 @@ jobs:
           ROM_TYPE_OPTION: ${{ github.event.inputs.rom_type_option }}
         run: |
           cd OriginGSITool
-          sudo bash LinkToGSI.sh "$ROM_LINK" "$ROM_TYPE"
+          wget https://mirrors.lolinet.com/firmware/lenomola/2024/fogona/official/RETUS/XT2413-2_FOGONA_RETUS_14_U1TFS34.100-35-14-1-4_subsidy-DEFAULT_regulatory-DEFAULT_cid50_CFC.xml.zip -O fogona.zip
+          sudo bash LinkToGSI.sh ./fogona.zip Generic
       - name: Prepare artifacts directory
         run: |
           mkdir -p $GITHUB_WORKSPACE/artifacts
@@ -52,7 +53,7 @@ jobs:
       - name: Process and Package Files
         id: package
         run: |
-          cd $GITHUB_WORKSPACE/OriginGSITool/output || exit 1
+          cd $GITHUB_WORKSPACE/OriginGSITool/Output || exit 1
           if [ $(ls -1 *.img 2>/dev/null | wc -l) -eq 0 ]; then
             echo "::error::No .img files found!"
             exit 1
