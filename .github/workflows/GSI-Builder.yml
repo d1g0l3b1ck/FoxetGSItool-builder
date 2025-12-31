@@ -42,11 +42,7 @@ jobs:
           ROM_TYPE_OPTION: ${{ github.event.inputs.rom_type_option }}
         run: |
           cd OriginGSITool
-          if [ "$ROM_TYPE_OPTION" = "AB" ]; then
-            sudo bash url2GSI.sh "$ROM_LINK" "$ROM_TYPE" --ab
-          else
-            sudo bash url2GSI.sh "$ROM_LINK" "$ROM_TYPE" --aonly
-          fi
+          sudo bash LinkToGSI.sh "$ROM_LINK" "$ROM_TYPE"
       - name: Prepare artifacts directory
         run: |
           mkdir -p $GITHUB_WORKSPACE/artifacts
@@ -54,7 +50,7 @@ jobs:
       - name: Process and Package Files
         id: package
         run: |
-          cd $GITHUB_WORKSPACE/FoxetGSI-tool/output || exit 1
+          cd $GITHUB_WORKSPACE/OriginGSITool/output || exit 1
           if [ $(ls -1 *.img 2>/dev/null | wc -l) -eq 0 ]; then
             echo "::error::No .img files found!"
             exit 1
