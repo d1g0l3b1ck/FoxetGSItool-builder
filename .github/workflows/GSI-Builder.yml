@@ -29,12 +29,12 @@ jobs:
 
       - name: Clone FoxetGSI-tool
         run: |
-          git clone --recurse-submodules https://github.com/FoxetGSI/FoxetGSI-tool.git
+          git clone --recurse-submodules https://github.com/khusnan21/OriginGSITool
       - name: Install dependencies
         run: |
-          cd FoxetGSI-tool
-          sudo bash setup.sh
-          sudo apt-get install -y p7zip-full
+          cd OriginGSITool
+          sudo apt install -y unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract rename liblzma-dev python3-pip brotli lz4 protobuf-compiler git gawk
+          pip3 install backports.lzma protobuf twrpdtgen extract-dtb pycryptodome
       - name: Build GSI
         env:
           ROM_TYPE: ${{ github.event.inputs.rom_type }}
